@@ -1,0 +1,672 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sports Hub - مركز الرياضة</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary-color: #3498db;
+            --secondary-color: #2ecc71;
+            --accent-color: #e74c3c;
+            --dark-color: #2c3e50;
+            --light-color: #ecf0f1;
+            --text-color: #333;
+            --background-color: #f9f9f9;
+        }
+        
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background-color: var(--background-color);
+            color: var(--text-color);
+            line-height: 1.6;
+            transition: all 0.3s ease;
+        }
+        
+        body[dir="rtl"] {
+            text-align: right;
+        }
+        
+        body[dir="ltr"] {
+            text-align: left;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        
+        /* Header Styles */
+        header {
+            background: linear-gradient(135deg, var(--primary-color), var(--dark-color));
+            color: white;
+            padding: 1rem;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .logo {
+            font-size: 1.8rem;
+            font-weight: bold;
+            display: flex;
+            align-items: center;
+        }
+        
+        .logo i {
+            margin-right: 10px;
+            color: var(--secondary-color);
+        }
+        
+        .language-selector {
+            display: flex;
+            gap: 10px;
+        }
+        
+        .lang-btn {
+            background: rgba(255, 255, 255, 0.2);
+            border: none;
+            color: white;
+            padding: 8px 15px;
+            border-radius: 20px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .lang-btn:hover, .lang-btn.active {
+            background: var(--secondary-color);
+        }
+        
+        /* Sports Navigation */
+        .sports-nav {
+            background: white;
+            padding: 15px;
+            border-radius: 10px;
+            margin: 20px 0;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+        }
+        
+        .sports-list {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            justify-content: center;
+        }
+        
+        .sport-item {
+            background: var(--light-color);
+            padding: 12px 20px;
+            border-radius: 30px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        .sport-item:hover {
+            background: var(--primary-color);
+            color: white;
+        }
+        
+        .sport-item.active {
+            background: var(--primary-color);
+            color: white;
+        }
+        
+        /* Main Content */
+        .main-content {
+            display: grid;
+            grid-template-columns: 1fr 3fr;
+            gap: 20px;
+        }
+        
+        /* Filters Sidebar */
+        .filters-sidebar {
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+        }
+        
+        .filter-group {
+            margin-bottom: 20px;
+        }
+        
+        .filter-title {
+            font-weight: 600;
+            margin-bottom: 10px;
+            color: var(--dark-color);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        .filter-options {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+        
+        .filter-option {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            padding: 8px;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .filter-option:hover {
+            background: var(--light-color);
+        }
+        
+        .filter-option.active {
+            background: var(--primary-color);
+            color: white;
+        }
+        
+        /* Exercises Grid */
+        .exercises-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 20px;
+        }
+        
+        .exercise-card {
+            background: white;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+            transition: transform 0.3s ease;
+        }
+        
+        .exercise-card:hover {
+            transform: translateY(-5px);
+        }
+        
+        .exercise-image {
+            width: 100%;
+            height: 180px;
+            background-color: #ddd;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #777;
+        }
+        
+        .exercise-info {
+            padding: 15px;
+        }
+        
+        .exercise-title {
+            font-size: 1.2rem;
+            margin-bottom: 10px;
+            color: var(--dark-color);
+        }
+        
+        .exercise-meta {
+            display: flex;
+            justify-content: space-between;
+            color: #777;
+            font-size: 0.9rem;
+            margin-bottom: 10px;
+        }
+        
+        .exercise-description {
+            margin-top: 10px;
+            color: #555;
+        }
+        
+        .exercise-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 5px;
+            margin-top: 10px;
+        }
+        
+        .exercise-tag {
+            background: var(--light-color);
+            padding: 5px 10px;
+            border-radius: 20px;
+            font-size: 0.8rem;
+        }
+        
+        /* Responsive Design */
+        @media (max-width: 900px) {
+            .main-content {
+                grid-template-columns: 1fr;
+            }
+            
+            .sports-list {
+                flex-wrap: nowrap;
+                overflow-x: auto;
+                padding-bottom: 10px;
+            }
+        }
+        
+        @media (max-width: 600px) {
+            .header-content {
+                flex-direction: column;
+                gap: 15px;
+            }
+            
+            .exercises-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body dir="rtl">
+    <header>
+        <div class="container">
+            <div class="header-content">
+                <div class="logo">
+                    <i class="fas fa-dumbbell"></i>
+                    <span data-lang="ar">مركز الرياضة</span>
+                    <span data-lang="en" style="display: none;">Sports Hub</span>
+                    <span data-lang="fr" style="display: none;">Hub Sportif</span>
+                </div>
+                <div class="language-selector">
+                    <button class="lang-btn active" data-lang="ar">العربية</button>
+                    <button class="lang-btn" data-lang="en">English</button>
+                    <button class="lang-btn" data-lang="fr">Français</button>
+                </div>
+            </div>
+        </div>
+    </header>
+    
+    <div class="container">
+        <div class="sports-nav">
+            <div class="sports-list">
+                <div class="sport-item active" data-sport="bodybuilding">
+                    <i class="fas fa-dumbbell"></i>
+                    <span data-lang="ar">كمال الأجسام</span>
+                    <span data-lang="en" style="display: none;">Bodybuilding</span>
+                    <span data-lang="fr" style="display: none;">Musculation</span>
+                </div>
+                <div class="sport-item" data-sport="fitness">
+                    <i class="fas fa-running"></i>
+                    <span data-lang="ar">اللياقة البدنية</span>
+                    <span data-lang="en" style="display: none;">Fitness</span>
+                    <span data-lang="fr" style="display: none;">Fitness</span>
+                </div>
+                <div class="sport-item" data-sport="yoga">
+                    <i class="fas fa-spa"></i>
+                    <span data-lang="ar">اليوغا</span>
+                    <span data-lang="en" style="display: none;">Yoga</span>
+                    <span data-lang="fr" style="display: none;">Yoga</span>
+                </div>
+                <div class="sport-item" data-sport="cardio">
+                    <i class="fas fa-heartbeat"></i>
+                    <span data-lang="ar">تمارين الكارديو</span>
+                    <span data-lang="en" style="display: none;">Cardio</span>
+                    <span data-lang="fr" style="display: none;">Cardio</span>
+                </div>
+                <div class="sport-item" data-sport="swimming">
+                    <i class="fas fa-swimmer"></i>
+                    <span data-lang="ar">السباحة</span>
+                    <span data-lang="en" style="display: none;">Swimming</span>
+                    <span data-lang="fr" style="display: none;">Natation</span>
+                </div>
+                <div class="sport-item" data-sport="running">
+                    <i class="fas fa-running"></i>
+                    <span data-lang="ar">الجري</span>
+                    <span data-lang="en" style="display: none;">Running</span>
+                    <span data-lang="fr" style="display: none;">Course</span>
+                </div>
+            </div>
+        </div>
+        
+        <div class="main-content">
+            <div class="filters-sidebar">
+                <div class="filter-group">
+                    <div class="filter-title">
+                        <i class="fas fa-dumbbell"></i>
+                        <span data-lang="ar">العضلات المستهدفة</span>
+                        <span data-lang="en" style="display: none;">Target Muscles</span>
+                        <span data-lang="fr" style="display: none;">Muscles Ciblés</span>
+                    </div>
+                    <div class="filter-options">
+                        <div class="filter-option active" data-muscle="all">
+                            <span data-lang="ar">الكل</span>
+                            <span data-lang="en" style="display: none;">All</span>
+                            <span data-lang="fr" style="display: none;">Tous</span>
+                        </div>
+                        <div class="filter-option" data-muscle="chest">
+                            <span data-lang="ar">الصدر</span>
+                            <span data-lang="en" style="display: none;">Chest</span>
+                            <span data-lang="fr" style="display: none;">Poitrine</span>
+                        </div>
+                        <div class="filter-option" data-muscle="back">
+                            <span data-lang="ar">الظهر</span>
+                            <span data-lang="en" style="display: none;">Back</span>
+                            <span data-lang="fr" style="display: none;">Dos</span>
+                        </div>
+                        <div class="filter-option" data-muscle="shoulders">
+                            <span data-lang="ar">الأكتاف</span>
+                            <span data-lang="en" style="display: none;">Shoulders</span>
+                            <span data-lang="fr" style="display: none;">Épaules</span>
+                        </div>
+                        <div class="filter-option" data-muscle="arms">
+                            <span data-lang="ar">الذراعين</span>
+                            <span data-lang="en" style="display: none;">Arms</span>
+                            <span data-lang="fr" style="display: none;">Bras</span>
+                        </div>
+                        <div class="filter-option" data-muscle="legs">
+                            <span data-lang="ar">الأرجل</span>
+                            <span data-lang="en" style="display: none;">Legs</span>
+                            <span data-lang="fr" style="display: none;">Jambes</span>
+                        </div>
+                        <div class="filter-option" data-muscle="abs">
+                            <span data-lang="ar">البطن</span>
+                            <span data-lang="en" style="display: none;">Abs</span>
+                            <span data-lang="fr" style="display: none;">Abdos</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="filter-group">
+                    <div class="filter-title">
+                        <i class="fas fa-signal"></i>
+                        <span data-lang="ar">مستوى الصعوبة</span>
+                        <span data-lang="en" style="display: none;">Difficulty Level</span>
+                        <span data-lang="fr" style="display: none;">Niveau de Difficulté</span>
+                    </div>
+                    <div class="filter-options">
+                        <div class="filter-option active" data-level="all">
+                            <span data-lang="ar">الكل</span>
+                            <span data-lang="en" style="display: none;">All</span>
+                            <span data-lang="fr" style="display: none;">Tous</span>
+                        </div>
+                        <div class="filter-option" data-level="beginner">
+                            <span data-lang="ar">مبتدئ</span>
+                            <span data-lang="en" style="display: none;">Beginner</span>
+                            <span data-lang="fr" style="display: none;">Débutant</span>
+                        </div>
+                        <div class="filter-option" data-level="intermediate">
+                            <span data-lang="ar">متوسط</span>
+                            <span data-lang="en" style="display: none;">Intermediate</span>
+                            <span data-lang="fr" style="display: none;">Intermédiaire</span>
+                        </div>
+                        <div class="filter-option" data-level="advanced">
+                            <span data-lang="ar">متقدم</span>
+                            <span data-lang="en" style="display: none;">Advanced</span>
+                            <span data-lang="fr" style="display: none;">Avancé</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="exercises-container">
+                <div class="exercises-grid">
+                    <!-- تمارين كمال الأجسام -->
+                    <div class="exercise-card" data-sport="bodybuilding" data-muscle="chest" data-level="intermediate">
+                        <div class="exercise-image">صورة تمرين الضغط</div>
+                        <div class="exercise-info">
+                            <h3 class="exercise-title" data-lang="ar">الضغط على المقعد (Bench Press)</h3>
+                            <h3 class="exercise-title" data-lang="en" style="display: none;">Bench Press</h3>
+                            <h3 class="exercise-title" data-lang="fr" style="display: none;">Développé Couché</h3>
+                            <div class="exercise-meta">
+                                <span data-lang="ar">متوسط</span>
+                                <span data-lang="en" style="display: none;">Intermediate</span>
+                                <span data-lang="fr" style="display: none;">Intermédiaire</span>
+                                <span data-lang="ar">باربل</span>
+                                <span data-lang="en" style="display: none;">Barbell</span>
+                                <span data-lang="fr" style="display: none;">Barre</span>
+                            </div>
+                            <p class="exercise-description" data-lang="ar">تمرين أساسي لتطوير القوة والحجم لعضلة الصدر. يتم الاستلقاء على مقعد ورفع الباربل لأعلى ثم خفضه للصدر.</p>
+                            <p class="exercise-description" data-lang="en" style="display: none;">Fundamental exercise for developing chest strength and size. Performed by lying on a bench and lifting a barbell upward then lowering it to the chest.</p>
+                            <p class="exercise-description" data-lang="fr" style="display: none;">Exercice fondamental pour développer la force et le volume de la poitrine. Effectué en s'allongeant sur un banc et en soulevant une barre vers le haut puis en l'abaissant vers la poitrine.</p>
+                            <div class="exercise-tags">
+                                <span class="exercise-tag" data-lang="ar">صدر</span>
+                                <span class="exercise-tag" data-lang="en" style="display: none;">Chest</span>
+                                <span class="exercise-tag" data-lang="fr" style="display: none;">Poitrine</span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="exercise-card" data-sport="bodybuilding" data-muscle="chest" data-level="beginner">
+                        <div class="exercise-image">صورة تمرين الضغط بالدمبل</div>
+                        <div class="exercise-info">
+                            <h3 class="exercise-title" data-lang="ar">الضغط بالدمبلز (Dumbbell Press)</h3>
+                            <h3 class="exercise-title" data-lang="en" style="display: none;">Dumbbell Press</h3>
+                            <h3 class="exercise-title" data-lang="fr" style="display: none;">Développé aux Haltères</h3>
+                            <div class="exercise-meta">
+                                <span data-lang="ar">مبتدئ</span>
+                                <span data-lang="en" style="display: none;">Beginner</span>
+                                <span data-lang="fr" style="display: none;">Débutant</span>
+                                <span data-lang="ar">دمبلز</span>
+                                <span data-lang="en" style="display: none;">Dumbbells</span>
+                                <span data-lang="fr" style="display: none;">Haltères</span>
+                            </div>
+                            <p class="exercise-description" data-lang="ar">تمرين ممتاز لعزل عضلات الصدر مع توفير مجال حركة أوسع مقارنة بالباربل.</p>
+                            <p class="exercise-description" data-lang="en" style="display: none;">Excellent exercise for isolating chest muscles with a wider range of motion compared to barbell.</p>
+                            <p class="exercise-description" data-lang="fr" style="display: none;">Excellent exercice pour isoler les muscles de la poitrine avec une amplitude de mouvement plus large comparé à la barre.</p>
+                            <div class="exercise-tags">
+                                <span class="exercise-tag" data-lang="ar">صدر</span>
+                                <span class="exercise-tag" data-lang="en" style="display: none;">Chest</span>
+                                <span class="exercise-tag" data-lang="fr" style="display: none;">Poitrine</span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- تمارين اللياقة البدنية -->
+                    <div class="exercise-card" data-sport="fitness" data-muscle="abs" data-level="beginner">
+                        <div class="exercise-image">صورة تمرين البلانك</div>
+                        <div class="exercise-info">
+                            <h3 class="exercise-title" data-lang="ar">البلانك (Plank)</h3>
+                            <h3 class="exercise-title" data-lang="en" style="display: none;">Plank</h3>
+                            <h3 class="exercise-title" data-lang="fr" style="display: none;">Gainage</h3>
+                            <div class="exercise-meta">
+                                <span data-lang="ar">مبتدئ</span>
+                                <span data-lang="en" style="display: none;">Beginner</span>
+                                <span data-lang="fr" style="display: none;">Débutant</span>
+                                <span data-lang="ar">لا يحتاج معدات</span>
+                                <span data-lang="en" style="display: none;">No equipment</span>
+                                <span data-lang="fr" style="display: none;">Aucun équipement</span>
+                            </div>
+                            <p class="exercise-description" data-lang="ar">تمرين ثبات لتقوية عضلات البطن والجذع. يتم بوضعية الضغط مع الساعدين على الأرض.</p>
+                            <p class="exercise-description" data-lang="en" style="display: none;">Stability exercise to strengthen core and abdominal muscles. Performed in a push-up position with forearms on the ground.</p>
+                            <p class="exercise-description" data-lang="fr" style="display: none;">Exercice de stabilité pour renforcer les muscles du tronc et abdominaux. Effectué en position de pompe avec les avant-bras au sol.</p>
+                            <div class="exercise-tags">
+                                <span class="exercise-tag" data-lang="ar">بطن</span>
+                                <span class="exercise-tag" data-lang="en" style="display: none;">Abs</span>
+                                <span class="exercise-tag" data-lang="fr" style="display: none;">Abdos</span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- تمارين اليوجا -->
+                    <div class="exercise-card" data-sport="yoga" data-muscle="all" data-level="beginner">
+                        <div class="exercise-image">صورة وضعية الكلب</div>
+                        <div class="exercise-info">
+                            <h3 class="exercise-title" data-lang="ar">وضعية الكلب المنظر للأسفل (Downward Dog)</h3>
+                            <h3 class="exercise-title" data-lang="en" style="display: none;">Downward Facing Dog</h3>
+                            <h3 class="exercise-title" data-lang="fr" style="display: none;">Posture du Chien Tête en Bas</h3>
+                            <div class="exercise-meta">
+                                <span data-lang="ar">مبتدئ</span>
+                                <span data-lang="en" style="display: none;">Beginner</span>
+                                <span data-lang="fr" style="display: none;">Débutant</span>
+                                <span data-lang="ar">سجادة يوجا</span>
+                                <span data-lang="en" style="display: none;">Yoga mat</span>
+                                <span data-lang="fr" style="display: none;">Tapis de yoga</span>
+                            </div>
+                            <p class="exercise-description" data-lang="ar">وضعية أساسية في اليوجا تمدد عضلات الظهر والساقين وتقوي الذراعين والكتفين.</p>
+                            <p class="exercise-description" data-lang="en" style="display: none;">Fundamental yoga pose that stretches back and leg muscles while strengthening arms and shoulders.</p>
+                            <p class="exercise-description" data-lang="fr" style="display: none;">Posture de yoga fondamentale qui étire les muscles du dos et des jambes tout en renforçant les bras et les épaules.</p>
+                            <div class="exercise-tags">
+                                <span class="exercise-tag" data-lang="ar">تمدد</span>
+                                <span class="exercise-tag" data-lang="en" style="display: none;">Stretch</span>
+                                <span class="exercise-tag" data-lang="fr" style="display: none;">Étirement</span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- تمارين الكارديو -->
+                    <div class="exercise-card" data-sport="cardio" data-muscle="legs" data-level="intermediate">
+                        <div class="exercise-image">صورة تمرين القفز</div>
+                        <div class="exercise-info">
+                            <h3 class="exercise-title" data-lang="ar">القفز على الحبل (Jump Rope)</h3>
+                            <h3 class="exercise-title" data-lang="en" style="display: none;">Jump Rope</h3>
+                            <h3 class="exercise-title" data-lang="fr" style="display: none;">Saut à la Corde</h3>
+                            <div class="exercise-meta">
+                                <span data-lang="ar">متوسط</span>
+                                <span data-lang="en" style="display: none;">Intermediate</span>
+                                <span data-lang="fr" style="display: none;">Intermédiaire</span>
+                                <span data-lang="ar">حبل قفز</span>
+                                <span data-lang="en" style="display: none;">Jump rope</span>
+                                <span data-lang="fr" style="display: none;">Corde à sauter</span>
+                            </div>
+                            <p class="exercise-description" data-lang="ar">تمرين كارديو فعال لحرق الدهون وتحسين التنسيق والقدرة على التحمل.</p>
+                            <p class="exercise-description" data-lang="en" style="display: none;">Effective cardio exercise for burning fat and improving coordination and endurance.</p>
+                            <p class="exercise-description" data-lang="fr" style="display: none;">Exercice cardio efficace pour brûler les graisses et améliorer la coordination et l'endurance.</p>
+                            <div class="exercise-tags">
+                                <span class="exercise-tag" data-lang="ar">كارديو</span>
+                                <span class="exercise-tag" data-lang="en" style="display: none;">Cardio</span>
+                                <span class="exercise-tag" data-lang="fr" style="display: none;">Cardio</span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- تمارين السباحة -->
+                    <div class="exercise-card" data-sport="swimming" data-muscle="all" data-level="beginner">
+                        <div class="exercise-image">صورة سباحة حرة</div>
+                        <div class="exercise-info">
+                            <h3 class="exercise-title" data-lang="ar">السباحة الحرة (Freestyle)</h3>
+                            <h3 class="exercise-title" data-lang="en" style="display: none;">Freestyle Swimming</h3>
+                            <h3 class="exercise-title" data-lang="fr" style="display: none;">Nage Libre</h3>
+                            <div class="exercise-meta">
+                                <span data-lang="ar">مبتدئ</span>
+                                <span data-lang="en" style="display: none;">Beginner</span>
+                                <span data-lang="fr" style="display: none;">Débutant</span>
+                                <span data-lang="ar">ملابس سباحة</span>
+                                <span data-lang="en" style="display: none;">Swimsuit</span>
+                                <span data-lang="fr" style="display: none;">Maillot de bain</span>
+                            </div>
+                            <p class="exercise-description" data-lang="ar">أسلوب السباحة الأكثر شيوعاً، يعمل على تحسين اللياقة القلبية وتقوية جميع عضلات الجسم.</p>
+                            <p class="exercise-description" data-lang="en" style="display: none;">The most common swimming style, improves cardiovascular fitness and strengthens all body muscles.</p>
+                            <p class="exercise-description" data-lang="fr" style="display: none;">Le style de nage le plus courant, améliore la forme cardiovasculaire et renforce tous les muscles du corps.</p>
+                            <div class="exercise-tags">
+                                <span class="exercise-tag" data-lang="ar">سباحة</span>
+                                <span class="exercise-tag" data-lang="en" style="display: none;">Swimming</span>
+                                <span class="exercise-tag" data-lang="fr" style="display: none;">Natation</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // تغيير اللغة
+            const langButtons = document.querySelectorAll('.lang-btn');
+            const allLangElements = document.querySelectorAll('[data-lang]');
+            
+            langButtons.forEach(button => {
+                button.addEventListener('click', function() {
+                    const selectedLang = this.getAttribute('data-lang');
+                    
+                    // تحديد النشط في أزرار اللغة
+                    langButtons.forEach(btn => btn.classList.remove('active'));
+                    this.classList.add('active');
+                    
+                    // تغيير اتجاه الصفحة
+                    document.body.setAttribute('dir', selectedLang === 'ar' ? 'rtl' : 'ltr');
+                    
+                    // إظهار العناصر الخاصة باللغة المحددة وإخفاء الأخرى
+                    allLangElements.forEach(element => {
+                        if (element.getAttribute('data-lang') === selectedLang) {
+                            element.style.display = '';
+                        } else {
+                            element.style.display = 'none';
+                        }
+                    });
+                });
+            });
+            
+            // فلترة الرياضات
+            const sportItems = document.querySelectorAll('.sport-item');
+            const exerciseCards = document.querySelectorAll('.exercise-card');
+            
+            sportItems.forEach(item => {
+                item.addEventListener('click', function() {
+                    const selectedSport = this.getAttribute('data-sport');
+                    
+                    // تحديد النشط في أزرار الرياضات
+                    sportItems.forEach(sport => sport.classList.remove('active'));
+                    this.classList.add('active');
+                    
+                    // تصفية التمارين حسب الرياضة
+                    exerciseCards.forEach(card => {
+                        if (selectedSport === 'all' || card.getAttribute('data-sport') === selectedSport) {
+                            card.style.display = '';
+                        } else {
+                            card.style.display = 'none';
+                        }
+                    });
+                });
+            });
+            
+            // فلترة العضلات
+            const muscleOptions = document.querySelectorAll('.filter-option[data-muscle]');
+            
+            muscleOptions.forEach(option => {
+                option.addEventListener('click', function() {
+                    const selectedMuscle = this.getAttribute('data-muscle');
+                    
+                    // تحديد النشط في خيارات العضلات
+                    muscleOptions.forEach(opt => opt.classList.remove('active'));
+                    this.classList.add('active');
+                    
+                    // تصفية التمارين حسب العضلة
+                    exerciseCards.forEach(card => {
+                        if (selectedMuscle === 'all' || card.getAttribute('data-muscle') === selectedMuscle) {
+                            card.style.display = '';
+                        } else {
+                            card.style.display = 'none';
+                        }
+                    });
+                });
+            });
+            
+            // فلترة مستوى الصعوبة
+            const levelOptions = document.querySelectorAll('.filter-option[data-level]');
+            
+            levelOptions.forEach(option => {
+                option.addEventListener('click', function() {
+                    const selectedLevel = this.getAttribute('data-level');
+                    
+                    // تحديد النشط في خيارات المستوى
+                    levelOptions.forEach(opt => opt.classList.remove('active'));
+                    this.classList.add('active');
+                    
+                    // تصفية التمارين حسب المستوى
+                    exerciseCards.forEach(card => {
+                        if (selectedLevel === 'all' || card.getAttribute('data-level') === selectedLevel) {
+                            card.style.display = '';
+                        } else {
+                            card.style.display = 'none';
+                        }
+                    });
+                });
+            });
+        });
+    </script>
+</body>
+</html>
